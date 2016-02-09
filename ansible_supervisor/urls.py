@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf import settings
 
 urlpatterns = [
-    url(r'^inventory/', include('inventory.urls')),
+    url(r'^inventory/', include('{}.inventory.urls'.format(settings.PROJECT_NAME))),
     url(r'^admin/', admin.site.urls),
 ]

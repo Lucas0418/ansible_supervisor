@@ -26,11 +26,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# User define variables.
+# For changed project name
+PROJECT_NAME = os.path.basename(BASE_DIR)
 
 # Application definition
 
 INSTALLED_APPS = [
-    'inventory.apps.InventoryConfig',
+    'ansible_supervisor.inventory',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
