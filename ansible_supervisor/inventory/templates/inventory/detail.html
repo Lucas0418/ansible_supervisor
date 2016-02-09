@@ -1,0 +1,26 @@
+<script language="javascript">
+</script>
+<h1>{{ host.ansible_alias }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'inventory:change' host.id %}" method="post">
+  {% csrf_token %}
+  <fieldset>
+    <legend><b>Vars of Host {{host.ansible_alias}}</b></legend>
+    <input type="text" readonly='yes' Value="var_name" />
+    <input type="text" readonly='yes' Value="var_value" />
+    <br /><br />
+    {% for hostvar in host.hostvar_set.all %}
+    <input type="text" name="hostvarname_{{ hostvar.id }}" value="{{ hostvar.var_name }}" />
+    <input type="text" name="hostvarvalue_{{ hostvar.id }}" value="{{ hostvar.var_value }}" />
+    <input type="hidden" name="hostvar"  value="{{ hostvar.id }}" />
+    <br />
+    {% endfor %}
+    <!-- <input type="text" name="new_var_name" id="newvarname"> -->
+    <!-- <input type="text" name="new_var_value" id="newvarvalue"> -->
+    <!-- <input type="button" name="new_var_button" id="newvarbutton" value="Add"> -->
+    <br />
+  </fieldset>
+  <input type="submit" value="Change" />
+</form>
