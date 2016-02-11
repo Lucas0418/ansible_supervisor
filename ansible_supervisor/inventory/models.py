@@ -47,8 +47,8 @@ class Facts(models.Model):
     ansible_arch = models.CharField(max_length=200)
     ansible_processor_cores = models.PositiveSmallIntegerField(default=None)
 
-    def __unicode__(self):
-        return self.host__ansible_alias
+    def __str__(self):
+        return self.host.ansible_alias
 
     class Meta:
         verbose_name = 'Facts'

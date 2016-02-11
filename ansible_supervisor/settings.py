@@ -34,6 +34,7 @@ PROJECT_NAME = os.path.basename(BASE_DIR)
 
 INSTALLED_APPS = [
     'ansible_supervisor.inventory',
+    'ansible_supervisor.modules',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
