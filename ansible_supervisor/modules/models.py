@@ -48,7 +48,6 @@ class SetupModule(models.Model):
             if xdatas[1] == 'SUCCESS':
                 try:
                     facts = hostinstance.facts
-                    facts.host = hostinstance
                     facts.ansible_memtotal_mb = int(jd['ansible_memtotal_mb'])
                     facts.ansible_disktotal_size = int(jd['ansible_mounts'][0]['size_total'])/1024/1024
                     facts.ansible_ipv4_address = jd['ansible_all_ipv4_addresses'][0]
