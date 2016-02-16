@@ -48,21 +48,30 @@ class SetupModule(models.Model):
                 if xdatas[1] == 'SUCCESS':
                     try:
                         facts = hostinstance.facts
-                        facts.ansible_memtotal_mb = int(jd['ansible_memtotal_mb'])
-                        facts.ansible_disktotal_size = int(jd['ansible_mounts'][0]['size_total'])/1024/1024
-                        facts.ansible_ipv4_address = jd['ansible_all_ipv4_addresses'][0]
-                        facts.ansible_processor_cores = int(jd['ansible_processor_cores'][0])
                     except Exception as e:
                         facts = Facts.objects.create(host=hostinstance,
+                                                    ansible_arch=jd['ansible_architecture'],
+                                                    ansible_lsb=jd['ansible_lsb']['description']+' - '+jd['ansible_lsb']['codename'],
                                                     ansible_memtotal_mb=int(jd['ansible_memtotal_mb']),
                                                     ansible_disktotal_size=int(jd['ansible_mounts'][0]['size_total'])/1024/1024,
                                                     ansible_ipv4_address=jd['ansible_all_ipv4_addresses'][0],
                                                     ansible_processor_cores=int(jd['ansible_processor_cores']))
+                        facts.save()
+                        hostinstance.save()
+                        super(SetupModule, self).save(using='default', *args, **kwargs)
+                        return
 
+                    facts.ansible_arch = jd['ansible_architecture']
+                    facts.ansible_lsb = jd['ansible_lsb']['description']+' - '+jd['ansible_lsb']['codename']
+                    facts.ansible_memtotal_mb = int(jd['ansible_memtotal_mb'])
+                    facts.ansible_disktotal_size = int(jd['ansible_mounts'][0]['size_total'])/1024/1024
+                    facts.ansible_ipv4_address = jd['ansible_all_ipv4_addresses'][0]
+                    facts.ansible_processor_cores = int(jd['ansible_processor_cores'])
                     facts.save()
-                hostinstance.save()
+                    hostinstance.save()
                 # result = {}
                 # result['ansible_alias'] = xdatas[0]
                 # result['ansible_setup_status'] = xdatas[1]
                 # result['ansible_setup_result'] = json.loads(xdatas[2])
         super(SetupModule, self).save(using='default', *args, **kwargs)
+        return
