@@ -9,9 +9,9 @@ import re
 
 ANSIBLE_ADMIN = 'ansible'
 ANSIBLE_SERVER = 'localhost'
-ANSIBLE_DYNAMIC_INVENTORY = 'personalAnsibleTools/ai.py'
+ANSIBLE_DYNAMIC_INVENTORY = './ansible_personal_tools/ai.py'
 ANSIBLE_HOME = '/home/ansible/ansible'
-ANSIBLE_VIR_ENV = '/home/ansible/ansiblevirenv'
+ANSIBLE_VIR_ENV = '/home/ansible/ansible/ansiblevirenv'
 ANSIBLE_COMMAND_PREFIX = 'ssh ' + ANSIBLE_ADMIN + '@' + ANSIBLE_SERVER + " '. "\
     + ANSIBLE_VIR_ENV + '/bin/activate;' + '. ' + ANSIBLE_HOME \
     + '/hacking/env-setup -q;' + 'ansible -i ' + ANSIBLE_DYNAMIC_INVENTORY + ' '
@@ -20,8 +20,8 @@ ANSIBLE_COMMAND_SUFFIX = " -m setup;exit'"
 
 class SetupModule(models.Model):
     command = models.CharField(default='', max_length=200, unique=True, blank=True)
-    hosts = models.ManyToManyField(Host)
-    groups = models.ManyToManyField(Group)
+    hosts = models.ManyToManyField(Host, blank=True)
+    groups = models.ManyToManyField(Group, blank=True)
 
     def save(self, using='default', *args, **kwargs):
         if self.pk is not None:

@@ -81,9 +81,9 @@ WSGI_APPLICATION = 'ansible_supervisor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangodev',
-        'USER': 'djangodev',
-        'PASSWORD': 'djangodev',
+        'NAME': 'ansibledb',
+        'USER': 'ansibledb',
+        'PASSWORD': 'Tina.1234',
         'HOST': 'localhost',
         'PORT': '3306',
     }
